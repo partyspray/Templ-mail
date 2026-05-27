@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بريد مؤقت - Mail.tm</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Tajawal', 'Tahoma', 'Segoe UI', sans-serif;
+}
+body {
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 40px 20px 20px;
+  font-weight: 400;
+}
+.container {
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  flex: 1;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #38bdf8;
+  font-size: 28px;
+  font-weight: 700;
+}
+.email-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 35px;
+  flex-wrap: wrap;
+}
+input {
+  flex: 1;
+  min-width: 200px;
+  padding: 14px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: #1e293b;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+}
+input:focus {
+  border-color: #38bdf8;
+}
+button {
+  padding: 14px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Tajawal', sans-serif;
+}
+button:hover {
+  background: #0ea5e9;
+}
+button.secondary {
+  background: #334155;
+  color: #e2e8f0;
+  font-weight: 500;
+}
+button.secondary:hover {
+  background: #475569;
+}
+h2 {
+  color: #f8fafc;
+  margin-bottom: 15px;
+  font-size: 20px;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 10px;
+  font-weight: 700;
+}
+.inbox {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 15px;
+  min-height: 250px;
+  border: 1px solid #334155;
+}
+.mail-item {
+  background: #0f172a;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  cursor: pointer;
+  transition: 0.2s;
+  overflow: hidden;
+}
+.mail-item:hover {
+  border-color: #38bdf8;
+}
+.mail-header {
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.mail-header-left {
+  flex: 1;
+  min-width: 0;
+}
+.mail-from {
+  color: #facc15;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mail-subject {
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mail-date {
+  color: #64748b;
+  font-size: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mail-content {
+  display: none;
+  padding: 0 16px 16px 16px;
+  border-top: 1px solid #334155;
+}
+.mail-content.active {
+  display: block;
+}
+.mail-content pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #cbd5e1;
+  margin-top: 12px;
+  font-size: 14px;
+  background: #1e293b;
+  padding: 12px;
+  border-radius: 6px;
+  font-family: 'Tajawal', sans-serif;
+}
+.empty {
+  text-align: center;
+  color: #64748b;
+  padding: 40px 0;
+}
+footer {
+  margin-top: 40px;
+  padding: 25px 0;
+  border-top: 1px solid #334155;
+}
+.warning-box {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fca5a5;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.warning-box strong {
+  color: #f87171;
+  font-weight: 700;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.footer-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  transition: 0.2s;
+  font-weight: 500;
+}
+.footer-links a:hover {
+  color: #38bdf8;
+  transform: translateY(-2px);
+}
+.footer-links svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+.powered-by {
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 400;
+}
+.powered-by a {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 700;
+}
+.powered-by a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .email-box { flex-direction: column; }
+  button, input { width: 100%; }
+  .footer-links { 
+    flex-direction: column;
+    gap: 18px;
+  }
+  .mail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📧 بريدك المؤقت</h1>
+
+  <div class="email-box">
+    <input type="text" id="email" readonly>
+    <button id="copyBtn">نسخ</button>
+    <button id="refreshBtn" class="secondary">تحديث</button>
+    <button id="newBtn">جديد</button>
+  </div>
+
+  <h2>الرسائل الواردة</h2>
+  <div id="inbox" class="inbox">
+    <p class="empty">جاري التحميل...</p>
+  </div>
+</div>
+
+<footer>
+  <div class="warning-box">
+    <strong>⚠️ تنبيه:</strong> نحن لسنا مسؤولين عن أي استخدام خاطىء أو استخدام البريد في محتويات حساسة
+  </div>
+  
+  <div class="footer-links">
+    <a href="about.html">ℹ️ عن الموقع</a>
+    <a href="privacy.html">🔒 سياسة الخصوصية</a>
+    <a href="https://t.me/mox_source" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.34-1.446 1.394c-.14.18-.26.342-.533.342l.212-3.051 5.55-5.012c.24-.213-.054-.333-.373-.121l-6.86 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/></svg>
+      تليجرام
+    </a>
+  </div>
+  
+  <div class="powered-by">
+    Powered by <a href="https://t.me/mox_source" target="_blank">Mox Source</a>
+  </div>
+</footer>
+
+<script>
+const API = 'https://api.mail.tm';
+const emailInput = document.getElementById('email');
+const copyBtn = document.getElementById('copyBtn');
+const refreshBtn = document.getElementById('refreshBtn');
+const newBtn = document.getElementById('newBtn');
+const inboxDiv = document.getElementById('inbox');
+
+let token = localStorage.getItem('mailToken') || '';
+let address = localStorage.getItem('mailAddress') || '';
+
+window.onload = () => {
+  if (token && address) {
+    emailInput.value = address;
+    getMessages();
+  } else {
+    createAccount();
+  }
+}
+
+async function getDomain() {
+  const res = await fetch(`${API}/domains`);
+  const data = await res.json();
+  return data['hydra:member'][0].domain;
+}
+
+async function createAccount() {
+  inboxDiv.innerHTML = '<p class="empty">جاري إنشاء البريد...</p>';
+  const domain = await getDomain();
+  const username = Math.random().toString(36).substring(2, 12);
+  address = `${username}@${domain}`;
+  const password = Math.random().toString(36).substring(2, 15);
+
+  await fetch(`${API}/accounts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ address, password })
+  });
+
+  const tokenRes = await fetch(`${API}/token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ address, password })
+  });
+
+  const tokenData = await tokenRes.json();
+  token = tokenData.token;
+  
+  localStorage.setItem('mailToken', token);
+  localStorage.setItem('mailAddress', address);
+  
+  emailInput.value = address;
+  getMessages();
+}
+
+async function getMessages() {
+  if (!token) return;
+  refreshBtn.textContent = '...';
+  
+  try {
+    const res = await fetch(`${API}/messages`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    
+    if (res.status === 401) {
+      localStorage.clear();
+      createAccount();
+      return;
+    }
+    
+    const data = await res.json();
+    const messages = data['hydra:member'];
+
+    if (messages.length === 0) {
+      inboxDiv.innerHTML = '<p class="empty">لا توجد رسائل بعد</p>';
+      refreshBtn.textContent = 'تحديث';
+      return;
+    }
+
+    inboxDiv.innerHTML = '';
+    for (let msg of messages) {
+      const date = new Date(msg.createdAt);
+      const formattedDate = date.toLocaleString('ar-EG', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      inboxDiv.innerHTML += `
+        <div class="mail-item" onclick="toggleMessage('${msg.id}', this)">
+          <div class="mail-header">
+            <div class="mail-header-left">
+              <div class="mail-from">${msg.from.address}</div>
+              <div class="mail-subject">${msg.subject || 'بدون موضوع'}</div>
+            </div>
+            <div class="mail-date">${formattedDate}</div>
+          </div>
+          <div class="mail-content" id="content-${msg.id}">
+            <p class="empty">جاري التحميل...</p>
+          </div>
+        </div>
+      `;
+    }
+  } catch (e) {
+    inboxDiv.innerHTML = '<p class="empty">خطأ في جلب الرسائل</p>';
+  }
+  refreshBtn.textContent = 'تحديث';
+}
+
+async function toggleMessage(id, element) {
+  const contentDiv = document.getElementById(`content-${id}`);
+  
+  if (contentDiv.classList.contains('active')) {
+    contentDiv.classList.remove('active');
+    return;
+  }
+  
+  document.querySelectorAll('.mail-content.active').forEach(el => {
+    el.classList.remove('active');
+  });
+  
+  contentDiv.classList.add('active');
+  
+  if (contentDiv.dataset.loaded !== 'true') {
+    try {
+      const msgRes = await fetch(`${API}/messages/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const msgData = await msgRes.json();
+      
+      contentDiv.innerHTML = `<pre>${msgData.text || msgData.html || 'لا يوجد محتوى'}</pre>`;
+      contentDiv.dataset.loaded = 'true';
+    } catch (e) {
+      contentDiv.innerHTML = '<p class="empty">خطأ في تحميل الرسالة</p>';
+    }
+  }
+}
+
+copyBtn.onclick = () => {
+  navigator.clipboard.writeText(address);
+  copyBtn.textContent = 'تم النسخ!';
+  setTimeout(() => copyBtn.textContent = 'نسخ', 1500);
+};
+
+refreshBtn.onclick = getMessages;
+
+newBtn.onclick = () => {
+  localStorage.clear();
+  createAccount();
+};
+</script>
+</body>
+</html>
